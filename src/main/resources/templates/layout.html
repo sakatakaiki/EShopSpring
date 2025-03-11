@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- belle/home2-default.html   11 Nov 2019 12:22:28 GMT -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title th:text="${pageTitle}">Belle Multipurpose Bootstrap 4 Html Template</title>
+    <meta name="description" content="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" th:href="@{/css/plugins.css}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/responsive.css}">
+</head>
+
+<body class="template-index home2-default">
+<div id="pre-loader">
+    <img src="/images/loader.gif" alt="Loading..." />
+</div>
+<div class="pageWrapper">
+<!-- Header -->
+    <header th:replace="fragments/header :: header"></header>
+
+<!-- Main Content -->
+    <main layout:fragment="content">
+        <!-- Nội dung từng trang con sẽ thay thế phần này -->
+    </main>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+    <!-- Scripts -->
+<!-- Including Jquery -->
+<script src="/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="/js/vendor/modernizr-3.6.0.min.js"></script>
+<script src="/js/vendor/jquery.cookie.js"></script>
+<script src="/js/vendor/wow.min.js"></script>
+<!-- Including Javascript -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/lazysizes.js"></script>
+<script src="/js/main.js"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Result</title>
+</head>
+<body>
+<h1 th:text="${message}"></h1>
+
+<!-- Hiển thị thông tin sinh viên -->
+<h2>Thông tin sinh viên:</h2>
+<p>Tên: <span th:text="${student.name}"></span></p>
+<p>Email: <span th:text="${student.email}"></span></p>
+<p>Khoá học: <span th:text="${student.course}"></span></p>
+
+</body>
+</html>
