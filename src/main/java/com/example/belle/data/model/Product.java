@@ -1,11 +1,12 @@
 package com.example.belle.data.model;
-
-import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 @Entity
+@Getter
+@Setter
 @Table(name = "products")
 public class Product {
     @Id
@@ -19,8 +20,9 @@ public class Product {
     private double price;
     private int quantity;
 
-    @Column(name = "category_id")
-    private int category_id;
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     private LocalDateTime createdAt;
     private int view;

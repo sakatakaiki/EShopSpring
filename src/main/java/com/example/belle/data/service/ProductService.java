@@ -1,7 +1,7 @@
 package com.example.belle.data.service;
 
-import com.example.belle.data.dao.ProductDAO;
 import com.example.belle.data.model.Product;
+import com.example.belle.data.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,42 +12,42 @@ import java.util.Optional;
 public class ProductService {
 
     @Autowired
-    private ProductDAO productDAO;
+    private ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
-        return productDAO.getAllProducts();
+        return productRepository.findAll();
     }
 
     public Optional<Product> getProductById(Long id) {
-        return productDAO.getProductById(id);
+        return productRepository.findById(id);
     }
 
     public Product createProduct(Product product) {
-        return productDAO.createProduct(product);
+        return productRepository.save(product);
     }
 
-    public Product updateProduct(Long id, Product updatedProduct) {
-        return productDAO.getProductById(id).map(product -> {
-            product.setName(updatedProduct.getName());
-            product.setDescription(updatedProduct.getDescription());
-            product.setThumbnail(updatedProduct.getThumbnail());
-            product.setPrice(updatedProduct.getPrice());
-            product.setQuantity(updatedProduct.getQuantity());
-            product.setCategory_id(updatedProduct.getCategory_id());
-            product.setView(updatedProduct.getView());
-            return productDAO.updateProduct(product);
-        }).orElseThrow(() -> new RuntimeException("Product not found"));
+    public Product updateProduct(Product product) {
+        return productRepository.save(product);
     }
 
     public void deleteProduct(Long id) {
-        productDAO.deleteProduct(id);
+        productRepository.deleteById(id);
     }
 
     public List<Product> getTop6ByPrice() {
-        return productDAO.getTop6ByPrice();
+        return productRepository.findTop6ByOrderByPriceDesc();
     }
 
     public List<Product> getTop8ByCreatedAt() {
-        return productDAO.getTop8ByCreatedAt();
+        return productRepository.findTop8ByOrderByCreatedAtDesc();
     }
+
+    public List<Product> getProductsByCategoryName(String categoryName) {
+        return productRepository.findByCategory_Name(categoryName);
+    }
+
+    public List<Product> searchProducts(String keyword) {
+        return productRepository.searchProductsByName(keyword);
+    }
+
 }
