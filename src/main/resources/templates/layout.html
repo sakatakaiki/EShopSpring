@@ -21,9 +21,6 @@
 </head>
 
 <body class="template-index home2-default">
-<div id="pre-loader">
-    <img src="/images/loader.gif" alt="Loading..." />
-</div>
 <div class="pageWrapper">
 <!-- Header -->
     <header th:replace="fragments/header :: header"></header>
@@ -34,18 +31,24 @@
     </main>
 
     <footer th:replace="fragments/footer :: footer"></footer>
+
+    <!--Scoll Top-->
+    <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
+    <!--End Scoll Top-->
     <!-- Scripts -->
-<!-- Including Jquery -->
-<script src="/js/vendor/jquery-3.3.1.min.js"></script>
-<script src="/js/vendor/modernizr-3.6.0.min.js"></script>
-<script src="/js/vendor/jquery.cookie.js"></script>
-<script src="/js/vendor/wow.min.js"></script>
-<!-- Including Javascript -->
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/plugins.js"></script>
-<script src="/js/popper.min.js"></script>
-<script src="/js/lazysizes.js"></script>
-<script src="/js/main.js"></script>
+    <!-- Including Jquery -->
+    <script th:src="@{/js/vendor/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{/js/vendor/modernizr-3.6.0.min.js}"></script>
+    <script th:src="@{/js/vendor/jquery.cookie.js}"></script>
+    <script th:src="@{/js/vendor/wow.min.js}"></script>
+
+    <!-- Including Javascript -->
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/lazysizes.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+
 </div>
 </body>
 </html>

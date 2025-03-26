@@ -138,38 +138,45 @@
                         <li class="lvl1 parent megamenu"><a href="#">Shop <i class="anm anm-angle-down-l"></i></a>
                             <div class="megamenu style4">
                                 <ul class="grid grid--uniform mmWrapper">
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Shop Pages</a>
+                                    <!-- Danh mục Categories -->
+                                    <li class="grid__item lvl-1 col-md-3 col-lg-3">
+                                        <a href="#" class="site-nav lvl-1">Categories</a>
                                         <ul class="subLinks">
-                                            <li class="lvl-2"><a href="shop-left-sidebar.html" class="site-nav lvl-2">Left Sidebar</a></li>
-                                            <li class="lvl-2"><a href="shop-right-sidebar.html" class="site-nav lvl-2">Right Sidebar</a></li>
-                                            <li class="lvl-2"><a href="shop-fullwidth.html" class="site-nav lvl-2">Fullwidth</a></li>
-                                            <li class="lvl-2"><a href="shop-grid-3.html" class="site-nav lvl-2">3 items per row</a></li>
-                                            <li class="lvl-2"><a href="shop-grid-4.html" class="site-nav lvl-2">4 items per row</a></li>
-                                            <li class="lvl-2"><a href="shop-grid-5.html" class="site-nav lvl-2">5 items per row</a></li>
-                                            <li class="lvl-2"><a href="shop-grid-6.html" class="site-nav lvl-2">6 items per row</a></li>
-                                            <li class="lvl-2"><a href="shop-grid-7.html" class="site-nav lvl-2">7 items per row</a></li>
-                                            <li class="lvl-2"><a href="shop-listview.html" class="site-nav lvl-2">Product Listview</a></li>
+                                            <th:block th:each="category : ${categories}">
+                                                <li class="lvl-2">
+                                                    <a th:href="@{/categories/{id}(id=${category.id})}" class="site-nav lvl-2">
+                                                        <span th:text="${category.name}"></span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
                                         </ul>
                                     </li>
-                                    <li class="grid__item lvl-1 col-md-3 col-lg-3"><a href="#" class="site-nav lvl-1">Shop Features</a>
+
+                                    <!-- Danh mục nổi bật (Hot Categories) -->
+                                    <li class="grid__item lvl-1 col-md-3 col-lg-3">
+                                        <a href="#" class="site-nav lvl-1">Category Features</a>
                                         <ul class="subLinks">
-                                            <li class="lvl-2"><a href="shop-left-sidebar.html" class="site-nav lvl-2">Product Countdown <span class="lbl nm_label3">Hot</span></a></li>
-                                            <li class="lvl-2"><a href="shop-right-sidebar.html" class="site-nav lvl-2">Infinite Scrolling</a></li>
-                                            <li class="lvl-2"><a href="shop-grid-3.html" class="site-nav lvl-2">Pagination - Classic</a></li>
-                                            <li class="lvl-2"><a href="shop-grid-6.html" class="site-nav lvl-2">Pagination - Load More</a></li>
-                                            <li class="lvl-2"><a href="product-labels.html" class="site-nav lvl-2">Dynamic Product Labels</a></li>
-                                            <li class="lvl-2"><a href="product-swatches-style.html" class="site-nav lvl-2">Product Swatches <span class="lbl nm_label2">Sale</span></a></li>
-                                            <li class="lvl-2"><a href="product-hover-info.html" class="site-nav lvl-2">Product Hover Info</a></li>
-                                            <li class="lvl-2"><a href="shop-grid-3.html" class="site-nav lvl-2">Product Reviews</a></li>
-                                            <li class="lvl-2"><a href="shop-left-sidebar.html" class="site-nav lvl-2">Discount Label <span class="lbl nm_label1">New</span></a></li>
+                                            <th:block th:each="category : ${topCategories}">
+                                                <li class="lvl-2">
+                                                    <a th:href="@{/categories/{id}(id=${category.id})}" class="site-nav lvl-2">
+                                                        <span th:text="${category.name}"></span>
+                                                        <span class="lbl nm_label3">Hot</span>
+                                                    </a>
+                                                </li>
+                                            </th:block>
                                         </ul>
                                     </li>
+
+                                    <!-- Hình ảnh Megamenu -->
                                     <li class="grid__item lvl-1 col-md-6 col-lg-6">
-                                        <a href="#"><img src="/images/megamenu-bg1.jpg" alt="" title="" /></a>
+                                        <a href="#">
+                                            <img th:src="@{/images/megamenu-bg1.jpg}" alt="Megamenu Image" title="Megamenu" />
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
+
                         <li class="lvl1 parent megamenu"><a href="#">Product <i class="anm anm-angle-down-l"></i></a>
                             <div class="megamenu style2">
                                 <ul class="grid mmWrapper">
