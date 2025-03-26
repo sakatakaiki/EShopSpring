@@ -45,4 +45,8 @@ public class OrderItem {
         return product != null ? product.getId() : null;
     }
 
+    public String getProductThumbnail() {
+        return product != null ? product.getThumbnail() : null;
+    }
+
 }

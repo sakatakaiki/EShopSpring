@@ -14,6 +14,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+
     @Column(nullable = false)
     private String password;
 
@@ -21,7 +22,7 @@ public class User {
 
     public User() {
     }
-    // Constructor dùng để trả về dữ liệu an toàn khi đăng nhập
+
     public User(Long id, String email, String password, String role) {
         this.id = id;
         this.email = email;

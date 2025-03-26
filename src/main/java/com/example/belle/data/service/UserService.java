@@ -4,6 +4,7 @@ import com.example.belle.data.dto.UserDTO;
 import com.example.belle.data.model.User;
 import com.example.belle.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +37,13 @@ public class UserService {
 
     // Tạo user mới
     public User createUser(User user) {
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+        user.setPassword(hashedPassword);
         return userRepository.save(user);
+    }
+
+    public boolean checkPassword(String rawPassword, String hashedPassword) {
+        return BCrypt.checkpw(rawPassword, hashedPassword);
     }
 
     // Cập nhật user
@@ -44,7 +51,9 @@ public class UserService {
         return userRepository.findById(id)
                 .map(user -> {
                     user.setEmail(updatedUser.getEmail());
-                    user.setPassword(updatedUser.getPassword());
+                    if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
+                        user.setPassword(BCrypt.hashpw(updatedUser.getPassword(), BCrypt.gensalt(10)));
+                    }
                     user.setRole(updatedUser.getRole());
                     return userRepository.save(user);
                 })
