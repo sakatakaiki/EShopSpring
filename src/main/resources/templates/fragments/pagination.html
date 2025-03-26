@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- src/main/resources/templates/fragments/pagination.html -->
+<div th:fragment="pagination (_arg0)">
+  <div class="d-flex justify-content-center mt-3">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <!-- Nút Previous -->
+        <li th:if="${_arg0.hasPrevious()}" class="page-item d-inline-block">
+          <a class="page-link" th:href="@{${pageUrl}(page=${_arg0.number - 1})}">&laquo;</a>
+        </li>
+
+        <!-- Số trang -->
+        <li th:each="i : ${#numbers.sequence(0, _arg0.totalPages - 1)}"
+            th:classappend="${i == _arg0.number} ? 'active' : ''"
+            class="page-item d-inline-block">
+          <a class="page-link" th:href="@{${pageUrl}(page=${i})}" th:text="${i + 1}"></a>
+        </li>
+
+        <!-- Nút Next -->
+        <li th:if="${_arg0.hasNext()}" class="page-item d-inline-block">
+          <a class="page-link" th:href="@{${pageUrl}(page=${_arg0.number + 1})}">&raquo;</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

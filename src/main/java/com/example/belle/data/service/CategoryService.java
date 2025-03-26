@@ -4,7 +4,7 @@ import com.example.belle.data.model.Category;
 import com.example.belle.data.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.PageRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +37,9 @@ public class CategoryService {
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
+
     public List<Category> getTopCategories() {
-        return categoryRepository.findAll();
+        return categoryRepository.findTop5CategoriesByProductCount(PageRequest.of(0, 5));
     }
+
 }

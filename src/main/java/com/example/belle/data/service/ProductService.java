@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
+
 
 @Service
 public class ProductService {
@@ -53,5 +58,19 @@ public class ProductService {
     public List<Product> getTopProducts() {
         return productRepository.findTop6ByOrderByViewDesc();
     }
+
+    public Page<Product> getProductsByCategorySorted(Long categoryId, String property, String order, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size,
+                order.equals("asc") ? Sort.by(property).ascending() : Sort.by(property).descending());
+        Page<Product> result = productRepository.findByCategoryId(categoryId, pageable);
+
+        // In ra console để kiểm tra dữ liệu
+        System.out.println("Category ID: " + categoryId);
+        System.out.println("Products fetched: " + result.getTotalElements());
+        result.getContent().forEach(p -> System.out.println("Product: " + p.getName() + " - " + p.getThumbnail()));
+
+        return result;
+    }
+
 
 }
