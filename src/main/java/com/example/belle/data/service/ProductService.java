@@ -50,4 +50,8 @@ public class ProductService {
         return productRepository.searchProductsByName(keyword);
     }
 
+    public List<Product> getTopProducts() {
+        return productRepository.findTop6ByOrderByViewDesc();
+    }
+
 }

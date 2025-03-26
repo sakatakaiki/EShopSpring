@@ -9,11 +9,9 @@
         <!--Collection Banner-->
         <div class="collection-header mb-4">
             <div class="collection-hero">
-                <div class="collection-hero__image"><img class="blur-up lazyload"
-                        data-src="{{ asset('images/cat-women1.jpg') }}" src="{{ asset('images/cat-women1.jpg') }}"
-                        alt="Women" title="Women" /></div>
+                <div class="collection-hero__image"><img class="blur-up lazyload" th:src="@{/images/cat-women1.jpg}" alt="Women" title="Women" /></div>
                 <div class="collection-hero__title-wrapper">
-                    <h1 class="collection-hero__title page-width">{{ $category->name }}</h1>
+                    <h1 class="collection-hero__title page-width" th:text="${category.name}"></h1>
                 </div>
             </div>
         </div>
@@ -34,26 +32,24 @@
                             <div class="widget-content">
                                 <div class="list list-sidebar-products">
                                     <div class="grid">
-                                        @foreach ($topProducts as $product)
-                                            <div class="grid__item">
+                                            <div class="grid__item" th:each="product : ${topProducts}">
                                                 <div class="mini-list-item">
                                                     <div class="mini-view_image">
                                                         <a class="grid-view-item__link"
-                                                            href="{{ route('products', $product->id) }}">
+                                                           th:href="@{/products/{id}(id=${product.id})}">
                                                             <img class="grid-view-item__image"
-                                                                src="{{ asset($product->thumbnail) }}" alt="" />
+                                                                 th:src="@{${product.thumbnail}}" alt="" />
                                                         </a>
                                                     </div>
                                                     <div class="details"> <a class="grid-view-item__title"
-                                                            href="{{ route('products', $product->id) }}">{{ $product->name }}</a>
+                                                                             th:href="@{/products/{id}(id=${product.id})}" th:text="${product.name}"></a>
                                                         <div class="grid-view-item__meta"><span
                                                                 class="product-price__price"><span class="money"
-                                                                    data-usd-price="{{ number_format($product->price, 2) }}">${{ number_format($product->price, 2) }}</span></span>
+                                                                                                   th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}"></span></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +57,7 @@
                         <!--End Popular Products-->
                         <!--Banner-->
                         <div class="sidebar_widget static-banner">
-                            <img src="{{ asset('images/side-banner-2.jpg') }}" alt="" />
+                            <img th:src="@{/images/side-banner-2.jpg}" alt="" />
                         </div>
                         <!--Banner-->
                         <!--Information-->
@@ -129,10 +125,10 @@
                                         class="col-4 col-md-4 col-lg-4 filters-toolbar__item collection-view-as d-flex justify-content-start align-items-center">
                                         <a href="shop-left-sidebar.html" title="Grid View"
                                             class="change-view change-view--active">
-                                            <img src="{{ asset('images/grid.jpg') }}" alt="Grid" />
+                                            <img th:src="@{/images/grid.jpg}" alt="Grid" />
                                         </a>
                                         <a href="shop-listview.html" title="List View" class="change-view">
-                                            <img src="{{ asset('images/list.jpg') }}" alt="List" />
+                                            <img th:src="@{/images/list.jpg}" alt="List" />
                                         </a>
                                     </div>
                                     <div
