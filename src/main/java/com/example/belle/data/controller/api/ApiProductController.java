@@ -20,6 +20,7 @@ public class ApiProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         return productService.getProductById(id)
