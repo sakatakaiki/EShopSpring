@@ -72,5 +72,21 @@ public class ProductService {
         return result;
     }
 
+    public Page<Product> searchProducts(String keyword, String property, String order, int page, int size) {
+        // Sử dụng findAll và thêm sắp xếp theo thuộc tính và thứ tự
+        Pageable pageable = PageRequest.of(page, size,
+                order.equals("asc") ? Sort.by(property).ascending() : Sort.by(property).descending());
+
+        // Tìm kiếm theo tên sản phẩm và trả về trang kết quả
+        return productRepository.searchProductsByName(keyword, property, order, pageable);
+    }
+
+    public Page<Product> getAllProductsForAdmin(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+
+
+
 
 }

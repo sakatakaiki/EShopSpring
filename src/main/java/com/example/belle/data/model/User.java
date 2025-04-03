@@ -2,6 +2,8 @@ package com.example.belle.data.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Entity
@@ -29,4 +31,12 @@ public class User {
         this.password = password; // Có thể đặt null để tránh trả về password
         this.role = role;
     }
+
+    @Setter
+    @Getter
+    @Transient
+    private String passwordConfirmation;
+
+    // Getters và Setters cho các trường khác
+
 }

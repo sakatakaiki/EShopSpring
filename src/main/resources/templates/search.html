@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<!--Body Content-->
+
+<div id="page-content" layout:fragment="content">
+        <!--Collection Banner-->
+        <div class="collection-header mb-4">
+            <div class="collection-hero">
+                <div class="collection-hero__image"><img class="blur-up lazyload" th:src="@{/images/cat-women1.jpg}" alt="Women" title="Women" /></div>
+                <div class="collection-hero__title-wrapper">
+                    <h1 class="collection-hero__title page-width" th:text="'Search results for: ' + ${query}"></h1>
+                </div>
+            </div>
+        </div>
+        <!--End Collection Banner-->
+
+        <div class="container">
+            <div class="row">
+                <!--Sidebar-->
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 sidebar filterbar">
+                    <div class="closeFilter d-block d-md-none d-lg-none"><i class="icon icon anm anm-times-l"></i></div>
+                    <div class="sidebar_tags">
+
+                        <!--Popular Products-->
+
+                        <!--End Popular Products-->
+                        <!--Banner-->
+                        <div class="sidebar_widget static-banner">
+                            <img th:src="@{/images/side-banner-2.jpg}" alt="" />
+                        </div>
+                        <!--Banner-->
+                        <!--Information-->
+                        <div class="sidebar_widget">
+                            <div class="widget-title">
+                                <h2>Information</h2>
+                            </div>
+                            <div class="widget-content">
+                                <p>Use this text to share information about your brand with your customers. Describe a
+                                    product, share announcements, or welcome customers to your store.</p>
+                            </div>
+                        </div>
+                        <!--end Information-->
+                        <!--Product Tags-->
+                        <div class="sidebar_widget">
+                            <div class="widget-title">
+                                <h2>Product Tags</h2>
+                            </div>
+                            <div class="widget-content">
+                                <ul class="product-tags">
+                                    <li><a href="#" title="Show products matching tag $100 - $400">$100 - $400</a></li>
+                                    <li><a href="#" title="Show products matching tag $400 - $600">$400 - $600</a></li>
+                                    <li><a href="#" title="Show products matching tag $600 - $800">$600 - $800</a></li>
+                                    <li><a href="#" title="Show products matching tag Above $800">Above $800</a></li>
+                                    <li><a href="#" title="Show products matching tag Allen Vela">Allen Vela</a></li>
+                                    <li><a href="#" title="Show products matching tag Black">Black</a></li>
+                                    <li><a href="#" title="Show products matching tag Blue">Blue</a></li>
+                                    <li><a href="#" title="Show products matching tag Cantitate">Cantitate</a></li>
+                                    <li><a href="#" title="Show products matching tag Famiza">Famiza</a></li>
+                                    <li><a href="#" title="Show products matching tag Gray">Gray</a></li>
+                                    <li><a href="#" title="Show products matching tag Green">Green</a></li>
+                                    <li><a href="#" title="Show products matching tag Hot">Hot</a></li>
+                                    <li><a href="#" title="Show products matching tag jean shop">jean shop</a></li>
+                                    <li><a href="#" title="Show products matching tag jesse kamm">jesse kamm</a></li>
+                                    <li><a href="#" title="Show products matching tag L">L</a></li>
+                                    <li><a href="#" title="Show products matching tag Lardini">Lardini</a></li>
+                                    <li><a href="#" title="Show products matching tag lareida">lareida</a></li>
+                                    <li><a href="#" title="Show products matching tag Lirisla">Lirisla</a></li>
+                                    <li><a href="#" title="Show products matching tag M">M</a></li>
+                                    <li><a href="#" title="Show products matching tag mini-dress">mini-dress</a></li>
+                                    <li><a href="#" title="Show products matching tag Monark">Monark</a></li>
+                                    <li><a href="#" title="Show products matching tag Navy">Navy</a></li>
+                                    <li><a href="#" title="Show products matching tag new">new</a></li>
+                                    <li><a href="#" title="Show products matching tag new arrivals">new arrivals</a></li>
+                                    <li><a href="#" title="Show products matching tag Orange">Orange</a></li>
+                                    <li><a href="#" title="Show products matching tag oxford">oxford</a></li>
+                                    <li><a href="#" title="Show products matching tag Oxymat">Oxymat</a></li>
+                                </ul>
+                                <span class="btn btn--small btnview">View all</span>
+                            </div>
+                        </div>
+                        <!--end Product Tags-->
+                    </div>
+                </div>
+                <!--End Sidebar-->
+                <!--Main Content-->
+                <div class="col-12 col-sm-12 col-md-9 col-lg-9 main-col">
+                    <div class="productList">
+                        <!--Toolbar-->
+                        <button type="button" class="btn btn-filter d-block d-md-none d-lg-none"> Product Filters</button>
+                        <div class="toolbar">
+                            <div class="filters-toolbar-wrapper">
+                                <div class="row align-items-center">
+                                    <!-- Chế độ xem dạng lưới / danh sách -->
+                                    <div class="col-4 col-md-4 col-lg-4 filters-toolbar__item collection-view-as d-flex justify-content-start align-items-center">
+                                        <a href="shop-left-sidebar.html" title="Grid View" class="change-view change-view--active">
+                                            <img th:src="@{/images/grid.jpg}" alt="Grid" />
+                                        </a>
+                                        <a href="shop-listview.html" title="List View" class="change-view">
+                                            <img th:src="@{/images/list.jpg}" alt="List" />
+                                        </a>
+                                    </div>
+
+                                    <!-- Tổng số sản phẩm -->
+                                    <div class="col-4 col-md-4 col-lg-4 text-center filters-toolbar__item filters-toolbar__item--count">
+                                        <span class="filters-toolbar__product-count">Showing: <span th:text="${products.totalElements}"></span></span>
+                                    </div>
+
+                                    <!-- Form sắp xếp -->
+                                    <div class="col-4 col-md-4 col-lg-4 d-flex justify-content-end">
+                                        <form th:action="@{/search}" method="get" class="d-flex align-items-center">
+                                            <input type="hidden" name="q" th:value="${query}" />
+                                            <!-- Lựa chọn thuộc tính cần sắp xếp -->
+                                            <label for="property" class="fw-bold me-2 hidden">Sort by:</label>
+                                            <select name="property" id="property" class="form-select me-3" style="width: 150px;" onchange="this.form.submit()">
+                                                <option value="name" th:selected="${property == 'name'}">Name</option>
+                                                <option value="price" th:selected="${property == 'price'}">Price</option>
+                                                <option value="created_at" th:selected="${property == 'created_at'}">Time</option>
+                                            </select>
+
+                                            <!-- Lựa chọn thứ tự sắp xếp -->
+                                            <label for="order" class="fw-bold me-2 hidden">Order:</label>
+                                            <select name="order" id="order" class="form-select" style="width: 150px;" onchange="this.form.submit()">
+                                                <option value="asc" th:selected="${order == 'asc'}">From A-Z</option>
+                                                <option value="desc" th:selected="${order == 'desc'}">From Z-A</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--End Toolbar-->
+                        <div class="grid-products grid--view-items">
+                            <div class="row product-load-more d-flex flex-wrap align-items-stretch">
+                                <div th:each="product : ${products}" class="col-6 col-sm-6 col-md-4 col-lg-3 item">
+                                    <!-- start product image -->
+                                    <div class="product-image">
+                                        <a th:href="@{/product/{id}(id=${product.id})}">
+                                            <img class="primary blur-up lazyload" th:src="@{'/' + ${product.thumbnail}}" th:alt="${product.name}" title="product">
+                                            <img class="hover blur-up lazyload" th:src="@{'/' + ${product.thumbnail}}" th:alt="${product.name}" title="product">
+                                        </a>
+                                        <!-- Start product button -->
+                                        <form class="variants add" th:action="@{/cart/add}" method="post">
+                                            <input type="hidden" name="productId" th:value="${product.id}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button class="btn btn-addto-cart" type="submit">ADD TO CART</button>
+                                        </form>
+                                        <div class="button-set">
+                                            <a href="javascript:void(0)" title="Quick View" class="quick-view-popup quick-view" data-toggle="modal" data-target="#content_quickview">
+                                                <i class="icon anm anm-search-plus-r"></i>
+                                            </a>
+                                            <div class="wishlist-btn">
+                                                <a class="wishlist add-to-wishlist" href="#" title="Add to Wishlist">
+                                                    <i class="icon anm anm-heart-l"></i>
+                                                </a>
+                                            </div>
+                                            <div class="compare-btn">
+                                                <a class="compare add-to-compare" href="compare.html" title="Add to Compare">
+                                                    <i class="icon anm anm-random-r"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end product image -->
+
+                                    <!-- start product details -->
+                                    <div class="product-details text-center">
+                                        <div class="product-name">
+                                            <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
+                                        </div>
+                                        <div class="product-price">
+                                            <span class="price money" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}"></span>
+                                        </div>
+                                    </div>
+                                    <!-- end product details -->
+                                </div>
+                            </div>
+                            <div th:replace="fragments/search_pagination :: pagination(${products}, '/search', ${query}, ${property}, ${order}, ${size})"></div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <!--End Main Content-->
+            </div>
+        </div>
+
+    </div>
+    <!--End Body Content-->
+
+
+
+

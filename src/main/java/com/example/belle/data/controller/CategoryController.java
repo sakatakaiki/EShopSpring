@@ -30,7 +30,7 @@ public class CategoryController {
             @RequestParam(name = "property", defaultValue = "name") String property,
             @RequestParam(name = "order", defaultValue = "asc") String order,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "size", defaultValue = "12") int size,
             Model model) {
 
         Optional<Category> category = categoryService.getCategoryById(id);

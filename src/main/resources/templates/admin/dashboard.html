@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/layout">
+
+
+                    <div class="content-wrapper" layout:fragment="content">
+                        <div class="page-header">
+                            <h3 class="page-title">
+                                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                                    <i class="mdi mdi-home"></i>
+                                </span> Dashboard
+                            </h3>
+                            <nav aria-label="breadcrumb">
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 stretch-card grid-margin" th:each="orderStats : ${orderStats}">
+                                <div class="card bg-gradient-danger card-img-holder text-white">
+                                    <div class="card-body">
+                                        <img th:src="@{/admin/images/dashboard/circle.svg}" class="card-img-absolute" alt="circle-image" />
+                                        <h4 class="font-weight-normal mb-3" th:text="${orderStats.title}"></h4>
+                                        <h2 class="mb-5" th:text="${orderStats.count}"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="clearfix">
+                                            <h4 class="card-title float-start">Orders by Month - Historia Chart</h4>
+                                            <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-end"></div>
+                                        </div>
+                                        <canvas id="visit-sale-chart" class="mt-4"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Orders by Day - Area chart</h4>
+                                        <canvas id="areaChart" style="height:250px"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Recent Sales</h4>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Code</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">User</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="order, iterStat : ${orderList}">
+                                                    <th scope="row" th:text="${iterStat.index + 1}"></th>
+                                                    <td>
+                                                        <a th:href="@{/admin/orders/show/{id}(id=${order.id})}" th:text="${order.code}"></a>
+                                                    </td>
+                                                    <td>
+                                            <span th:class="${order.status == 'finished' ? 'badge badge-success' : (order.status == 'pending' ? 'badge badge-danger' : 'badge badge-secondary')}"
+                                                  th:text="${order.status}"></span>
+                                                    </td>
+                                                    <td th:text="${order.user.email}"></td>
+                                                    <td><a th:href="@{/admin/orders/show/{id}(id=${order.id})}" class="btn btn-info">Details</a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- content-wrapper ends -->

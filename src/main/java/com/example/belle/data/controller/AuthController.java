@@ -37,13 +37,21 @@ public class AuthController {
 
         Optional<User> userOpt = userService.getUserByEmail(email);
         if (userOpt.isPresent() && userService.checkPassword(password, userOpt.get().getPassword())) {
-            session.setAttribute("user", userOpt.get());  // Lưu user vào session
+            User user = userOpt.get();
+            session.setAttribute("user", user);
+            session.setAttribute("role", user.getRole()); // Lưu role vào session
+
+            // Chuyển hướng theo role
+            if ("admin".equals(user.getRole())) {
+                return "redirect:/admin/dashboard";
+            }
             return "redirect:/";
         } else {
             model.addAttribute("error", "Invalid email or password");
             return "login";
         }
     }
+
 
     // Xử lý logout
     @GetMapping("/logout")

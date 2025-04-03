@@ -135,7 +135,7 @@
                                                 <div class="qtyField">
                                                     <a class="qtyBtn minus" href="javascript:void(0);"><i
                                                             class="fa anm anm-minus-r" aria-hidden="true"></i></a>
-                                                    <input type="text" id="Quantity" name="quantity" value="1"
+                                                    <input type="text" id="Quantity" name="quantity" value="1" min="1" max="${product.quantity}"
                                                         class="product-form__input qty">
                                                     <a class="qtyBtn plus" href="javascript:void(0);"><i
                                                             class="fa anm anm-plus-r" aria-hidden="true"></i></a>
@@ -522,10 +522,8 @@
                                     <!-- end product image -->
 
                                     <!-- Start product button -->
-                                    <form class="variants add" action="#" method="post">
-                                        @csrf
-                                        <input type="hidden" name="productId" value="{{ $product->id }}">
-                                        <input type="hidden" name="price" value="{{ $product->price }}">
+                                    <form class="variants add" th:action="@{/cart/add}" method="post">
+                                        <input type="hidden" name="productId" th:value="${related.id}">
                                         <input type="hidden" name="quantity" value="1">
                                         <button class="btn btn-addto-cart" type="submit">ADD TO CART</button>
                                     </form>

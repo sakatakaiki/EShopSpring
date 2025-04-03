@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<div class="content-wrapper" layout:fragment="content">
+        <div class="page-header">
+            <h3 class="page-title"> Products List </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/admin/products}">Products</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">All</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Thumbnail</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr th:each="product, iterStat : ${products}">
+                                        <th scope="row" th:text="${(currentPage * 10) + iterStat.index + 1}"></th>
+                                        <td>
+                                            <img th:src="@{'/' + ${product.thumbnail}}" width="64" height="64" alt="alt" />
+                                        </td>
+                                        <td th:text="${product.name}"></td>
+                                        <td th:text="${product.price}"></td>
+                                        <td th:text="${product.quantity}"></td>
+                                        <td th:text="${product.category.name}"></td>
+                                        <td>
+                                            <a th:href="@{/admin/products/edit/{id}(id=${product.id})}"
+                                                class="btn btn-warning">Edit</a>
+                                        </td>
+                                        <td>
+                                            <form th:action="@{/admin/products/destroy/{id}(id=${product.id})}" method="POST"
+                                                onsubmit="return confirm('Are you sure?');">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-center mt-3">
+                            <div th:if="${totalPages > 1}">
+                                <ul class="pagination">
+                                    <li class="page-item" th:each="page : ${#numbers.sequence(0, totalPages - 1)}">
+                                        <a class="page-link" th:href="@{/admin/products?page={page}(page=${page})}" th:text="${page + 1}"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

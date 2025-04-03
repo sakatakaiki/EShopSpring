@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/layout">
+    <div class="content-wrapper" layout:fragment="content">
+        <div class="page-header">
+            <h3 class="page-title"> Add New User </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/admin/users}">Users</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="forms-sample" th:action="@{/admin/users/store}" method="post" th:object="${user}">
+
+                            <div class="form-group">
+                                <label for="exampleInputName1">Email Address</label>
+                                <input name="email" type="email" class="form-control" id="exampleInputName1"
+                                    placeholder="Email Address" th:value="${user.email}">
+                                <span th:if="${#fields.hasErrors('email')}" class="text-danger"
+                                      th:errors="*{email}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName1">Password</label>
+                                <input name="password" type="password" class="form-control" id="exampleInputPassword2"
+                                    placeholder="Password">
+                                <span th:if="${#fields.hasErrors('password')}" class="text-danger"
+                                      th:errors="*{password}"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="password_confirmation">Re-enter Password</label>
+                                <input name="passwordConfirmation" type="password" class="form-control" id="password_confirmation"
+                                    placeholder="Re-enter Password">
+                                <span th:if="${#fields.hasErrors('passwordConfirmation')}" class="text-danger"
+                                      th:errors="*{passwordConfirmation}"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <select name="role" class="form-select" id="role">
+                                    <option value="user" th:selected="${user.role == 'user'}">User</option>
+                                    <option value="admin" th:selected="${user.role == 'admin'}">Admin</option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('role')}" class="text-danger"
+                                      th:errors="*{role}"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

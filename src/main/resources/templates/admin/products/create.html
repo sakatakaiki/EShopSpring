@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<div class="content-wrapper" layout:fragment="content">
+        <div class="page-header">
+            <h3 class="page-title"> Add Product </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/admin/products}">Products</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="forms-sample" th:action="@{/admin/products/store}" method="post" enctype="multipart/form-data">
+
+                            <div class="form-group">
+                                <label for="exampleInputName1">Product Name</label>
+                                <input name="name" type="text" class="form-control" id="productName"
+                                    placeholder="Product Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleTextarea1">Description</label>
+                                <textarea name="description" class="form-control" id="exampleTextarea1"
+                                    rows="4"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Thumbnail</label>
+                                <input type="file" class="file-upload-default" id="thumbnailInput">
+                                <div class="input-group col-xs-12">
+                                    <input id="thumbnailText" name="thumbnail" type="text" class="form-control file-upload-info" placeholder="Upload Image" readonly>
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-gradient-primary py-3" type="button" onclick="document.getElementById('thumbnailInput').click();">Upload</button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Image Preview Section -->
+                            <div class="form-group">
+                                <label>Preview New Thumbnail</label>
+                                <div>
+                                    <img id="newThumbnailPreview" src="" alt="New Thumbnail Preview" style="max-width: 100px; max-height: 100px; object-fit: cover; display: none;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName1">Price</label>
+                                <input name="price" type="text" class="form-control" id="price"
+                                    placeholder="Price">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName1">Quantity</label>
+                                <input name="quantity" type="text" class="form-control" id="exampleInputName1"
+                                    placeholder="Quantity">
+                            </div>
+                            <div class="form-group">
+                                <label for="category_id">Category</label>
+                                <select class="form-select" id="category_id" name="category_id">
+                                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('thumbnailInput').addEventListener('change', function (event) {
+        let file = event.target.files[0];
+        if (file) {
+            // Lấy tên file và tạo chuỗi đường dẫn
+            let fileName = file.name;
+            let filePath = "images/product-images/" + fileName;
+
+            // Hiển thị chuỗi đường dẫn vào input
+            document.getElementById('thumbnailText').value = filePath;
+        }
+    });
+</script>

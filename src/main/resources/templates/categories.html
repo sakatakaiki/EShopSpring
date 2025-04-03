@@ -36,13 +36,13 @@
                                                 <div class="mini-list-item">
                                                     <div class="mini-view_image">
                                                         <a class="grid-view-item__link"
-                                                           th:href="@{/products/{id}(id=${product.id})}">
+                                                           th:href="@{/product/{id}(id=${product.id})}">
                                                             <img class="grid-view-item__image"
                                                                  th:src="@{'/' + ${product.thumbnail}}" alt="" />
                                                         </a>
                                                     </div>
                                                     <div class="details"> <a class="grid-view-item__title"
-                                                                             th:href="@{/products/{id}(id=${product.id})}" th:text="${product.name}"></a>
+                                                                             th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
                                                         <div class="grid-view-item__meta"><span
                                                                 class="product-price__price"><span class="money"
                                                                                                    th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}"></span></span>
@@ -165,16 +165,15 @@
                                 <div th:each="product : ${products}" class="col-6 col-sm-6 col-md-4 col-lg-3 item">
                                     <!-- start product image -->
                                     <div class="product-image">
-                                        <a th:href="@{/products/{id}(id=${product.id})}">
+                                        <a th:href="@{/product/{id}(id=${product.id})}">
                                             <img class="primary blur-up lazyload" th:src="@{'/' + ${product.thumbnail}}" th:alt="${product.name}" title="product">
                                             <img class="hover blur-up lazyload" th:src="@{'/' + ${product.thumbnail}}" th:alt="${product.name}" title="product">
                                         </a>
                                         <!-- Start product button -->
-                                        <form class="variants add" action="#" method="post">
-                                            <input type="hidden" name="product_id" th:value="${product.id}">
-                                            <input type="hidden" name="price" th:value="${product.price}">
+                                        <form class="variants add" th:action="@{/cart/add}" method="post">
+                                            <input type="hidden" name="productId" th:value="${product.id}">
                                             <input type="hidden" name="quantity" value="1">
-                                            <button class="btn btn-addto-cart">ADD TO CART</button>
+                                            <button class="btn btn-addto-cart" type="submit">ADD TO CART</button>
                                         </form>
                                         <div class="button-set">
                                             <a href="javascript:void(0)" title="Quick View" class="quick-view-popup quick-view" data-toggle="modal" data-target="#content_quickview">
@@ -197,7 +196,7 @@
                                     <!-- start product details -->
                                     <div class="product-details text-center">
                                         <div class="product-name">
-                                            <a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.name}"></a>
+                                            <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
                                         </div>
                                         <div class="product-price">
                                             <span class="price money" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}"></span>
@@ -207,7 +206,8 @@
                                 </div>
                             </div>
 
-                            <div th:replace="fragments/pagination :: pagination (${products})"></div>
+                            <div th:replace="fragments/pagination :: pagination(${products}, ${category.id}, ${property}, ${order}, ${size})"></div>
+
 
                         </div>
 

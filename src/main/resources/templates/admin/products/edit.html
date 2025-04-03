@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="admin/layout">
+<div class="content-wrapper" layout:fragment="content">
+        <div class="page-header">
+            <h3 class="page-title"> Edit Product </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/admin/products}">Products</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="forms-sample" th:action="@{/admin/products/update/{id}(id=${product.id})}"
+                            method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="productName">Product Name</label>
+                                <input name="name" th:value="${product.name}" type="text"
+                                    class="form-control" id="productName" placeholder="Product Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleTextarea1">Description</label>
+                                <textarea name="description" class="form-control" id="exampleTextarea1"
+                                    rows="4" th:text="${product.description}"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Thumbnail</label>
+                                <input type="file" class="file-upload-default" id="thumbnailInput">
+                                <div class="input-group col-xs-12">
+                                    <!-- Hiển thị giá trị thumbnail hiện tại của sản phẩm nếu có -->
+                                    <input id="thumbnailText" name="thumbnail" type="text" class="form-control file-upload-info"
+                                           th:value="${product.thumbnail}" placeholder="Upload Image">
+                                    <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-gradient-primary py-3" type="button" onclick="document.getElementById('thumbnailInput').click();">Upload</button>
+                                </span>
+                                </div>
+                            </div>
+
+                            <!-- Hiển thị ảnh hiện tại -->
+                            <div class="form-group">
+                                <label>Current Thumbnail</label>
+                                <div>
+                                    <img id="currentThumbnail" th:src="@{'/' + ${product.thumbnail}}" alt="Current Product Thumbnail" style="max-width: 100px; max-height: 100px; object-fit: cover;">
+                                </div>
+                            </div>
+
+                            <!-- Hiển thị ảnh mới khi upload -->
+                            <div class="form-group">
+                                <label>Preview New Thumbnail</label>
+                                <div>
+                                    <img id="newThumbnailPreview" src="" alt="New Thumbnail Preview" style="max-width: 100px; max-height: 100px; object-fit: cover; display: none;">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input name="price" th:value="${product.price}" type="text"
+                                    class="form-control" id="price" placeholder="Price">
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input name="quantity" th:value="${product.quantity}" type="text"
+                                    class="form-control" id="quantity" placeholder="Quantity">
+                            </div>
+                            <div class="form-group">
+                                <label for="category_id">Category</label>
+                                <select class="form-select" id="category_id" name="category_id">
+                                    <option th:each="category : ${categories}"
+                                            th:value="${category.id}"
+                                            th:text="${category.name}"
+                                            th:selected="${category.id == product.category.id}">
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+                            <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

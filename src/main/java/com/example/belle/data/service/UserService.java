@@ -66,6 +66,35 @@ public class UserService {
     }
 
 
+    // 🔥 DÙNG CHO ADMIN (SỬ DỤNG User TRỰC TIẾP)
+    public List<User> getAllUsersAdmin() {
+        return userRepository.findAll();
+    }
+
+    public Optional<User> getUserByIdAdmin(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public User createUserAdmin(User user) {
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+        user.setPassword(hashedPassword);
+        return userRepository.save(user);
+    }
+
+
+    public User updateUserAdmin(Long id, User updatedUser) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setEmail(updatedUser.getEmail());
+                    if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
+                        user.setPassword(BCrypt.hashpw(updatedUser.getPassword(), BCrypt.gensalt(10)));
+                    }
+                    user.setRole(updatedUser.getRole());
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
 
 
 }
