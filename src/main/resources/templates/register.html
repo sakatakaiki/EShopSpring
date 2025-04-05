@@ -3,56 +3,58 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 
+<!--Body Content-->
+<div id="page-content" layout:fragment="content">
+    <!--Page Title-->
+    <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Create an Account</h1></div>
+        </div>
+    </div>
+    <!--End Page Title-->
 
-    <!--Body Content-->
-    <div id="page-content" layout:fragment="content">
-    	<!--Page Title-->
-    	<div class="page section-header text-center">
-			<div class="page-title">
-        		<div class="wrapper"><h1 class="page-width">Create an Account</h1></div>
-      		</div>
-		</div>
-        <!--End Page Title-->
-        
-        <div class="container">
-        	<div class="row">
-                <p th:if="${error}" th:text="${error}" style="color: red;"></p>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
-                	<div class="mb-4">
-                       <form method="post" action="/register" id="CustomerLoginForm" accept-charset="UTF-8" class="contact-form">
-                          <div class="row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label for="CustomerEmail">Email</label>
-                                    <input type="email" name="email" id="CustomerEmail" required>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label for="CustomerPassword">Password</label>
-                                    <input type="password" value="" name="password" id="CustomerPassword" required>
-                                </div>
-                            </div>
-                              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                  <div class="form-group">
-                                      <label for="ConfirmPassword">Confirm Password</label>
-                                      <input type="password" name="confirmPassword" id="ConfirmPassword" required>
-                                  </div>
-                              </div>
-                              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                  <p th:if="${passwordError}" th:text="${passwordError}" style="color: red;"></p>
-                              </div>
-                          </div>
-                          <div class="row">
-                            <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
-                                <input type="submit" class="btn mb-3" value="Create">
-                            </div>
-                         </div>
-                     </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                <form method="post" action="/register" id="CustomerRegisterForm" class="contact-form">
+                    <div class="form-group" th:if="${showOtpField}">
+                        <label for="CustomerEmail">Email</label>
+                        <input type="email" name="email" id="CustomerEmail" required class="form-control mb-3">
                     </div>
-               	</div>
+                    <div class="form-group" th:if="${showOtpField}">
+                        <label for="CustomerPassword">Password</label>
+                        <input type="password" name="password" id="CustomerPassword" required class="form-control mb-3">
+                    </div>
+                    <div class="form-group" th:if="${showOtpField}">
+                        <label for="ConfirmPassword">Confirm Password</label>
+                        <input type="password" name="confirmPassword" id="ConfirmPassword" required class="form-control mb-3">
+                    </div>
+
+                    <!-- OTP Field (after phone number entry) -->
+                    <div class="form-group" th:if="${showOtpField}">
+                        <label for="otp">Enter OTP</label>
+                        <input type="text" name="otp" id="otp" required class="form-control mb-3">
+                    </div>
+
+                    <div class="text-center" th:if="${showOtpField}">
+                        <input type="submit" class="btn mb-3" value="Create Account">
+                    </div>
+                </form>
+
+                <!-- OTP Button (only visible after phone number) -->
+                <div class="text-center" th:if="${!otpSent}">
+                    <form method="post" action="/sendOtp" id="sendOtpForm">
+                        <input type="text" name="phoneNumber" id="sendOtpPhoneNumber" placeholder="Enter your phone number" required class="form-control mb-3">
+                        <button type="submit" class="btn mb-3">Send OTP</button>
+                    </form>
+
+
+                </div>
             </div>
         </div>
-        
     </div>
-    <!--End Body Content-->
+
+
+</div>
+<!--End Body Content-->
+

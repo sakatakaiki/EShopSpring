@@ -23,10 +23,14 @@ public class CartController {
     @Autowired
     private OrderItemService orderItemService;
 
+
+
     @GetMapping
     public String viewCart(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
+            model.addAttribute("cartItems", List.of());
+            model.addAttribute("totalPrice", 0.0);
             return "redirect:/login";
         }
 
@@ -75,5 +79,8 @@ public class CartController {
         orderService.checkout(user.getId());
         return "redirect:/cart";
     }
+
+
+
 
 }

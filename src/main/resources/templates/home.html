@@ -102,7 +102,7 @@
                                     <!-- End product name -->
                                     <!-- product price -->
                                     <div class="product-price">
-                                        <span class="price" th:text="${product.price} + ' $'">$100</span>
+                                        <span class="price" th:text="'$'+${product.price}">$100</span>
                                     </div>
                                     <!-- End product price -->
                                 </div>
@@ -190,7 +190,7 @@
                                 <!-- End product name -->
                                 <!-- product price -->
                                 <div class="product-price">
-                                    <span class="price" th:text="${product.price} + ' $'">$100</span>
+                                    <span class="price" th:text="'$'+${product.price}">$100</span>
                                 </div>
                                 <!-- End product price -->
                             </div>

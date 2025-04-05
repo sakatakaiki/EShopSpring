@@ -1,7 +1,10 @@
 package com.example.belle.data.controller;
 
 import com.example.belle.data.model.User;
+import com.example.belle.data.service.TwilioService;
 import com.example.belle.data.service.UserService;
+import com.twilio.rest.verify.v2.service.Verification;
+import com.twilio.rest.verify.v2.service.VerificationCheck;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Optional;
 
@@ -18,6 +22,12 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TwilioService twilioService;
+
+    @Value("${twilio.verifyServiceSid}")
+    private String verifyServiceSid;
 
     // Hiển thị trang đăng nhập
     @GetMapping("/login")
@@ -65,10 +75,12 @@ public class AuthController {
 
     // Hiển thị trang đăng ký
     @GetMapping("/register")
-    public String showRegisterPage(HttpSession session) {
+    public String showRegisterPage(HttpSession session, Model model) {
         if (session.getAttribute("user") != null) {
-            return "redirect:/"; // Nếu đã đăng nhập, quay về trang chủ
+            return "redirect:/";
         }
+        model.addAttribute("showOtpField", false);
+        model.addAttribute("otpSent", false);
         return "register";
     }
 
@@ -77,6 +89,8 @@ public class AuthController {
     public String register(@RequestParam String email,
                            @RequestParam String password,
                            @RequestParam String confirmPassword,
+                           @RequestParam String otp,
+                           HttpServletRequest request,
                            Model model) {
         // Kiểm tra mật khẩu nhập lại
         if (!password.equals(confirmPassword)) {
@@ -90,15 +104,54 @@ public class AuthController {
             return "register";
         }
 
-        // Tạo user mới
-        User newUser = new User();
-        newUser.setEmail(email);
-        newUser.setPassword(password);
-        newUser.setRole("user");
+        // Kiểm tra OTP
+        HttpSession session = request.getSession();
+        // Make sure the verificationSid exists in the session and is valid
+        String verificationSid = (String) session.getAttribute("verificationSid");
+        if (verificationSid == null || verificationSid.isEmpty()) {
+            model.addAttribute("error", "Verification SID not found.");
+            return "register";
+        }
 
-        userService.createUser(newUser);
-        return "redirect:/login";
+        System.out.println("Verification SID: " + verificationSid);
+
+        VerificationCheck verificationCheck = VerificationCheck.creator(verifyServiceSid) // Use verifyServiceSid from properties
+                .setTo("+84374178451")
+                .setCode(otp)
+                .create();
+
+// Check if the OTP is correct
+        if ("approved".equals(verificationCheck.getStatus())) {
+            // Continue registration process
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setPassword(password);
+            newUser.setRole("user");
+            userService.createUser(newUser);
+            return "redirect:/login";  // Redirect after successful registration
+        } else {
+            // Handle OTP failure
+            model.addAttribute("otpError", "Invalid OTP!");
+            return "register";  // Return to the registration page
+        }
     }
+
+    // Sửa lại phương thức gửi OTP
+    @PostMapping("/sendOtp")
+    public String sendOtp(@RequestParam String phoneNumber, HttpServletRequest request, Model model) {
+        Verification verification = twilioService.sendOtp(phoneNumber);
+
+        // Lưu SID của OTP vào session
+        HttpSession session = request.getSession();
+        session.setAttribute("verificationSid", verification.getSid());
+
+        // Chuyển đổi giao diện
+        model.addAttribute("message", "OTP sent to your phone!");
+        model.addAttribute("showOtpField", true);  // Hiển thị trường OTP
+        model.addAttribute("otpSent", true);
+        return "register";
+    }
+
 
 
 }

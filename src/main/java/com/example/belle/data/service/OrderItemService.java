@@ -50,6 +50,13 @@ public class OrderItemService {
     }
 
     public void removeItem(Long itemId) {
-        orderItemRepository.deleteById(itemId);
+        OrderItem item = orderItemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        Order order = item.getOrder();
+        order.getOrderItems().remove(item); // Xoá item khỏi danh sách orderItems của order
+
+        orderItemRepository.delete(item); // Xoá item khỏi database
     }
+
 }

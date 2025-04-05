@@ -18,19 +18,21 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByStatus(String status);
 
-    // Lấy danh sách các ngày mà đơn hàng được tạo
-    @Query("SELECT DISTINCT FUNCTION('DATE', o.createdAt) FROM Order o WHERE o.createdAt IS NOT NULL ORDER BY o.createdAt")
+    // Lấy danh sách các ngày mà đơn hàng được tạo, định dạng yyyy-MM-dd
+    @Query("SELECT DISTINCT FUNCTION('DATE_FORMAT', o.createdAt, '%Y-%m-%d') FROM Order o WHERE o.createdAt IS NOT NULL ORDER BY o.createdAt")
     List<String> findAllDates();
 
     // Lấy số lượng đơn hàng được tạo theo từng ngày
-    @Query("SELECT COUNT(o) FROM Order o WHERE FUNCTION('DATE', o.createdAt) = ?1")
+    @Query("SELECT COUNT(o) FROM Order o WHERE FUNCTION('DATE_FORMAT', o.createdAt, '%Y-%m-%d') = ?1")
     long findOrderByDate(String date);
 
     // Lấy danh sách các tháng mà đơn hàng được tạo
-    @Query("SELECT DISTINCT FUNCTION('MONTH', o.createdAt) FROM Order o WHERE o.createdAt IS NOT NULL ORDER BY o.createdAt")
+    @Query("SELECT DISTINCT FUNCTION('DATE_FORMAT', o.createdAt, '%Y-%m') FROM Order o WHERE o.createdAt IS NOT NULL ORDER BY o.createdAt")
     List<String> findAllMonths();
 
+
     // Lấy số lượng đơn hàng theo từng tháng
-    @Query("SELECT COUNT(o) FROM Order o WHERE FUNCTION('MONTH', o.createdAt) = ?1")
+    @Query("SELECT COUNT(o) FROM Order o WHERE FUNCTION('DATE_FORMAT', o.createdAt, '%Y-%m') = ?1")
     long findOrderByMonth(String month);
+
 }

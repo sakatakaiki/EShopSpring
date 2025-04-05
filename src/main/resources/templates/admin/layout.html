@@ -58,7 +58,7 @@
 <!-- endinject -->
 
 <!-- Plugin js for this page -->
-<script th:src="@{/admin/vendors/chart.js/chart.umd.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script th:src="@{/admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
 <!-- End plugin js for this page -->
 
@@ -72,10 +72,11 @@
 
 <!-- Custom js for this page -->
 <script>
-    var labels = [[${dateList}]]; // Sử dụng cú pháp đúng của Thymeleaf
-    var data = [[${orderByDateList}]]; // Sử dụng cú pháp đúng của Thymeleaf
-    var labels2 = [[${monthList}]]; // Sử dụng cú pháp đúng của Thymeleaf
-    var data2 = [[${orderByMonthList}]]; // Sử dụng cú pháp đúng của Thymeleaf
+    var labels = [[${dateList}]];
+    var data = [[${orderByDateList}]];
+    var labels2 = [[${monthList}]];
+    var data2 = [[${orderByMonthList}]];
+
 </script>
 
 
